@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>טעית!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: black;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #FF0000; /* צבע אדום */
+        }
+
+        /* אפקט המספרים שיורדים */
+        .matrix {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .matrix span {
+            position: absolute;
+            top: -100px;
+            width: 1em;
+            color: #FF0000;
+            font-size: 20px;
+            animation: drop 5s linear infinite;
+        }
+
+        @keyframes drop {
+            to {
+                transform: translateY(110vh);
+            }
+        }
+
+        /* אפקט תזוזה (glitch) לכותרות */
+        @keyframes glitch {
+            0% {
+                text-shadow: 0 0 10px #FF0000, 0 0 20px #FF0000, 0 0 30px #FF0000;
+            }
+            50% {
+                text-shadow: 0 0 15px #FF0000, 0 0 25px #FF0000, 0 0 35px #FF0000;
+                transform: translate(2px, -2px); 
+            }
+            100% {
+                text-shadow: 0 0 10px #FF0000, 0 0 20px #FF0000, 0 0 30px #FF0000;
+                transform: translate(-2px, 2px); 
+            }
+        }
+
+        h1, h2, h3 {
+            color: #FF0000;
+            text-shadow: 0 0 10px #FF0000, 0 0 20px #FF0000, 0 0 30px #FF0000;
+            animation: glitch 1.5s infinite alternate;
+        }
+
+        h1 {
+            font-size: 4em;
+        }
+
+        h2 {
+            margin-top: 10px;
+            font-size: 1.5em;
+        }
+
+        h3 {
+            margin-top: 5px;
+            font-size: 1.2em;
+            color: #FF0000;
+            text-shadow: 0 0 10px #FF0000, 0 0 20px #FF0000, 0 0 30px #FF0000;
+            animation: glitch 1.5s infinite alternate;
+        }
+    </style>
+</head>
+<body>
+    <h1>404</h1>
+    <h2>Oops!</h2>
+    <h3>Sorry, you are wrong.</h3>
+
+    <!-- שכבת המספרים בסגנון מטריקס -->
+    <div class="matrix"></div>
+
+    <script>
+        const matrixContainer = document.querySelector('.matrix');
+        const columns = Math.floor(window.innerWidth / 20);
+
+        for (let i = 0; i < columns; i++) {
+            const span = document.createElement('span');
+            span.textContent = Math.round(Math.random()); // יצירת 0 או 1 באופן רנדומלי
+            span.style.left = `${i * 20}px`;
+            span.style.animationDelay = `${Math.random() * 5}s`;
+            matrixContainer.appendChild(span);
+        }
+
+        // יצירת האפקט על ידי החלפת המספרים שיורדים
+        setInterval(() => {
+            document.querySelectorAll('.matrix span').forEach(span => {
+                span.textContent = Math.round(Math.random());
+            });
+        }, 100);
+    </script>
+</body>
+</html>
